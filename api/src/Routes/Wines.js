@@ -7,6 +7,17 @@ const { Wine } = require("../server/db.js")
 const router = Router();
 
 router.get("/", async function (req, res) {
+  const name = req.query.name
+  if (name) {
+    try {
+      const DBWines = await Wine.findAll({
+        where: { name: {[Sequelize.Op.iLike]: name + "%"}}
+      })
+      return DBWines
+    } catch (error) {
+      return console.log("hubo un error :(  " + error)
+    }
+  }
     try {
       const DBWines = await Wine.findAll({
         attributes: { exclude: ["createdAt", "updatedAt"] }
@@ -16,5 +27,14 @@ router.get("/", async function (req, res) {
       return console.log("hubo un error :(  " + error)
     }
 });
+router.get("/:id", async (req, res) =>{
+  const id = req.params.id
+  try {
+    const DBGame = await Videogame.findByPk(id)
+    return DBGame
+  } catch (error) {
+    return console.log("hubo un error :(  " + error)
+  }
+})
 
 module.exports = router;
