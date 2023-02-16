@@ -7,6 +7,7 @@ const { conn } = require('./db.js');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const routes = require("../Routes/index.js")
+const uploadImage = require("./uploadImage.js")
 
 const app = express()
 const server = http.createServer(app)
@@ -28,6 +29,18 @@ app.use(function (req, res, next) {
 
 app.use(cors())
 app.use(morgan("dev"))
+
+app.post("/uploadImage", (req, res) => {
+  uploadImage(req.body.image)
+      .then((url) => res.send(url))
+      .catch((err) => res.status(500).send(err))
+})
+
+app.post("/uploadMultipleImages", (req, res) => {
+  uploadImage.uploadMultipleImages(req.body.images)
+      .then((urls) => res.send(urls))
+      .catch((err) => res.status(500).send(err));
+});
 
 app.use('/api', routes);
 
