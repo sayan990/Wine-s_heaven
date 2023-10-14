@@ -7,7 +7,7 @@ const { Wine } = require("../server/db.js");
 const router = Router();
 
 router.post("/", async function PostWine(req, res) {
-    const { name, image, brand, price, color, smell, flavor, type, end, active } =
+    const { name, image, brand, price, color, smell, flavor, type, end} =
     req.body;
     try {
         const post = await Wine.create({
@@ -20,7 +20,6 @@ router.post("/", async function PostWine(req, res) {
             flavor,
             type,
             end,
-            active,
             id: uuidv4(),
           });
         
