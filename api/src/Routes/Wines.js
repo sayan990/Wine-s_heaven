@@ -30,8 +30,8 @@ router.get("/", async function (req, res) {
 router.get("/:id", async (req, res) =>{
   const id = req.params.id
   try {
-    const DBGame = await Videogame.findByPk(id)
-    return DBGame
+    const DBWine = await Wine.findByPk(id)
+    res.json(DBWine)
   } catch (error) {
     return console.log("hubo un error :(  " + error)
   }

@@ -24,4 +24,15 @@ router.post("/", async function Filter(req, res) {
   }
 });
 
+router.get("/:id", async (req, res) =>{
+  const id = req.params.id
+  try {
+    const DBwine = await Wine.findByPk(id)
+    res.json(DBwine)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Parece que hubo un error con la busqueda por id" });
+  }
+})
+
 module.exports = router;
